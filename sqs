@@ -1,15 +1,15 @@
 {
   "Version": "2012-10-17",
-  "Id": "__default_policy_ID",
+  "Id": "default_policy",
   "Statement": [
     {
-      "Sid": "__owner_statement",
+      "Sid": "OwnerFullAccess",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::431958577614:root"
+        "AWS": "arn:aws:iam::352917280532:root"
       },
       "Action": "SQS:*",
-      "Resource": "arn:aws:sqs:us-east-1:431958577614:MyS3Queue"
+      "Resource": "arn:aws:sqs:us-east-1:352917280532:s3-sns-sqs-kmit"
     },
     {
       "Sid": "Allow-SNS-SendMessage",
@@ -18,10 +18,10 @@
         "Service": "sns.amazonaws.com"
       },
       "Action": "SQS:SendMessage",
-      "Resource": "arn:aws:sqs:us-east-1:431958577614:MyS3Queue",
+      "Resource": "arn:aws:sqs:us-east-1:352917280532:s3-sns-sqs-kmit",
       "Condition": {
         "ArnEquals": {
-          "aws:SourceArn": "arn:aws:sns:us-east-1:431958577614:s3-sns-sqs-kmit"
+          "aws:SourceArn": "arn:aws:sns:us-east-1:352917280532:s3-sns-sqs-kmit"
         }
       }
     }
