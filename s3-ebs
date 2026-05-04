@@ -1,0 +1,23 @@
+{
+  "Version": "2008-10-17",
+  "Id": "__default_policy_ID",
+  "Statement": [
+    {
+      "Sid": "Allow-S3-Publish",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "s3.amazonaws.com"
+      },
+      "Action":"SNS:Publish",
+      "Resource": "arn:aws:sns:us-east-1:431958577614:MyEmailTopic",
+      "Condition": {
+        "ArnLike":{
+          "aws:SourceArn":"arn:aws:s3:::sns-s3-bucket-var"
+        },
+        "StringEquals": {
+          "aws:SourceAccount": "431958577614"
+        }
+      }
+    }
+  ]
+}
