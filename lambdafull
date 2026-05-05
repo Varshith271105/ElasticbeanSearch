@@ -1,0 +1,225 @@
+HARI VIGNESH RAO 23BD1A052Q
+Se5ng up an AWS Lambda funcBon to trigger whenever an object is uploaded
+to an S3 bucket and update a DynamoDB table
+step-by-step procedure for se/ng up an AWS Lambda func8on to trigger whenever an object is
+uploaded to an S3 bucket and update a DynamoDB table:
+1. Create an AWS Account: If you haven't already, sign up for an AWS account at h>ps://aws.amazon.com/.
+2. Access AWS Management Console: Log in to the AWS Management Console using your AWS account
+credenFals.
+3. Open AWS Lambda Console: Navigate to the Lambda service by either searching for "Lambda" in the
+AWS Management Console or
+4. Create a New Lambda FuncFon:
+ - Click on the "Create funcFon" bu>on.
+ - Choose "Author from scratch".
+ - Enter a name for your funcFon (e.g., "S3ToDynamoDB").
+ - Choose Python as the runFme.
+ - Under "Permissions", create a new role with basic Lambda permissions or choose an exisFng role that
+has permissions to access S3 and DynamoDB.
+ - Click on the "Create funcFon" bu>on.
+Dia File Edit View Tabs Bookmarks History Extensions Window Help 28°C 41% Q Fri Mar 7:43PM
+Launch AWS Academy S3ToDynamoDB | Func
+< C us-east-1.console.aws.amazon.com / S3ToDynamoDB Functions Lambda Chat
+Account ID: 3529-1728-0532 aws O Q Search [Option+S] Σ ? United States (N. Virginia) voclabs/user4570789=harivigneshrao23@kmit.edu.in
+Lambda
+<
+Functions K
+S3ToDynamoDB
+Successfully created the function S3ToDynamoDB. You can now change its code and configuration. To invoke your function with a test event, choose "Test".
+S3ToDynamoDB
+Function overview Info
+Diagram Template
++ Add trigger
+S3ToDynamoDB
+Layers (0)
+Code Test Monitor Configuration Aliases Versions
+Code source Info
+EXPLORER Js index.mis X
+✓ S3TODYNAMODB Js index.mjs > ...
+JS index.mjs 1 export const handler
+// TODO implement
+CloudShell Feedback
+= async (event) =>
+Throttle Π Copy ARN Actions
+Export to Infrastructure Composer
+Description
+Download
+Last modified
+3 minutes ago
+Function ARN
+arn:aws:lambda:us-east-1:352917280532:function:S3ToDyn + Add destination amoDB
+Function URL Info
+Open in Visual Studio Code Upload from
+S3ToDynamoDB Π Π 08
+2026, Amazon Web Services, Inc. or its affiliates. Privacy Terms Cookie preferences
+Dia File Edit View Tabs Bookmarks History Extensions Window Help 28°C 40% Fri Mar 6 7:48 PM
+Launch AWS Academy Create function | Funct
+< us-east-1.console.aws.amazon.com / Create function Functions Lambda
+aws Q Search [Option+S]
+Lambda Functions Create function
+Chat
+28-0532
+United States (N. Virginia), t.edu.in
+Ο
+Create function Info
+CloudShell Feedback
+Choose one of the following options to create your function.
+Author from scratch
+Start with a simple Hello World example
+Use a blueprint
+Basic information
+S3ToDynamoD
+e language to u
+Python 3.14
+Durable execution
+Enable d
+Enable
+Architecture
+implify
+of your function.
+Container image
+Build a Lambda applicatio nfiguration prese Select a container image to deploy for your function.
+Region, and can't are a-z, A-Z, 0-9, hyphens (-), and underscores (
+supports only Node.js, Python, and Ruby.
+tions. Supports Pytho pricing
+x86_64
+Permissions Inf
+By default, Lambda will create an execution role with permissions to upload logs to Amazon CloudWatch Logs. You can customize this default role later when adding triggers.
+Change default execution role
+Execution role
+o access
+Create default role
+LabRole
+View role details in IAM
+with the right permissions for your
+Use another role
+C Create new role
+Additional configurations
+Use additional configurations to set up networking, security, and governance for your function. These settings help secure and customize your Lambda function deployment.
+Cancel Create function
+©2026, Amazon Web Services, Inc. or its affiliates. Privacy Terms Cookie preferences
+5. Upload Code:
+ - Write the Python code for your Lambda funcFon. This code will be triggered whenever an object is
+uploaded to the specified S3 bucket.
+ - Here's an example code snippet:
+import boto3
+from uuid import uuid4
+def lambda_handler(event, context):
+ dynamodb = boto3.resource('dynamodb')
+ dynamoTable = dynamodb.Table('newtable2')
+ if 'Records' in event:
+ for record in event['Records']:
+ bucket_name = record['s3']['bucket']['name']
+ object_key = record['s3']['object']['key']
+ size = record['s3']['object'].get('size', -1)
+ event_name = record['eventName']
+ event_Fme = record['eventTime']
+ dynamoTable.put_item(
+ Item={
+ 'unique': str(uuid4()),
+ 'Bucket': bucket_name,
+ 'Object': object_key,
+ 'Size': size,
+ 'Event': event_name,
+ 'EventTime': event_Fme
+ }
+ )
+ else:
+ print("No S3 event received")
+ return {
+ "statusCode": 200,
+ "body": "Data stored in DynamoDB"
+ }
+6. Configure Trigger:
+ - In the Designer secFon, click on "Add trigger".
+ - Select "S3" as the trigger type.
+ - Configure the trigger to listen to the S3 bucket where you want to trigger the Lambda funcFon.
+ - Specify the event type (e.g., "All object create events").
+ - Click on the "Add" bu>on.
+Dia File Edit View Tabs Bookmarks History Extensions Window Help
+Launch AWS Academy S3ToDynamoDB | Func Upload objects - S3 bu +
+us-east-1.console.aws.amazon.com / Upload objects - S3 bucket herohondasplendor S3 us-east-1
+aws Q Search
+Amazon S3
+Upload succeeded
+For more information, see the Files and folders table.
+Upload: status
+[Option+S]
+After you navigate away from this page, the following information is no longer available.
+Summary
+Destination s3://herohondasplendor
+Files and folders Configuration
+Files and folders (1 total, 669.3 KB)
+Q Find by name
+Name
+3.DEFENCE BASICS.pdf 2
+Folder
+CloudShell Feedback
+스
+32°C 78% Q Sun Mar 8 6:06 PM
+a Chat
+Account ID: 3529-1728-0532 A United States (N. Virginia) voclabs/user4570789=harivigneshrao23@kmit.edu.in
+Succeeded
+1 file, 669.3 KB (100.00%)
+Failed
+0 files, O В (0%)
+Type
+application/pdf
+스
+Size
+669.3 KB
+Close
+< 1>
+Status Error A
+Succeeded
+©2026, Amazon Web Services, Inc. or its affiliates. Privacy Terms Cookie preferences
+Dia File Edit View Tabs Bookmarks History Extensions Window Help
+Launch AWS Academy Add triggers | Lambda
+us-east-1.console.aws.amazon.com / Add triggers Lambda
+aws Q
+Search [Option+S]
+Ξ Lambda Add triggers
+Add trigger
+Trigger configuration Info
+asynchronous storage
+Bucket
+27°C 27% Q Fri Mar 6 8:50PM
+Account ID: 3529-1728-0532 A United States (N. Virginia)
+Chat
+voclabs/user4570789=harivigneshrao23@kmit.edu.in
+Choose or enter the ARN of an S3 bucket that serves as the event source. The bucket must be in the same region as the function.
+Qs3/herohondasplendor
+Bucket region: us-east-1
+Event types
+C
+Select the events that you want to have trigger the Lambda function. You can optionally set upa prefix or suffix for an event. However, for each bucket, individual events cannot have multiple configurations with overlapping prefixes or suffixes that could match the same object key.
+All object create events ☑
+Prefix - optional
+Enter a single optional prefix to limit the notifications to objects with keys that start with matching characters. Any special characters 1 must be URL encoded.
+e.g. images/
+Suffix - optional
+Enter a single optional suffix to limit the notifications to objects with keys that end with matching characters. Any special characters must be URL encoded.
+e.g..jpg
+Recursive invocation
+If your function writes objects to an S3 bucket,ensure that you are using different S3 buckets for input and output.Writing to the same bucket increases the risk of creating a recursive invocation, which can result in increased Lambda usage and increased costs. Learn more 1
+I acknowledge that using the same S3 bucket for both input and output is not recommended and that this configuration can cause recursive invocations,
+increased Lambda usage, and increased costs.
+Lambda will add the necessary permissions for AWS S3 to invoke your Lambda function from this trigger.
+Info
+CloudShell Feedback
+Cancel Add
+Ο
+©2026, Amazon Web Services, Inc. or its affiliates. Privacy Terms Cookie preferences
+7. Configure Environment Variables (Op8onal):
+ - If your Lambda funcFon requires any environment variables (e.g., credenFals for accessing DynamoDB),
+you can set them in the "ConfiguraFon" tab under "Environment variables".
+8. Test Your FuncFon:
+ - You can test your Lambda funcFon manually by clicking on the "Test" bu>on in the Lambda console.
+ - You can create a sample test event or use a custom test event to simulate the S3 event that triggers
+your funcFon.
+9. Save and Deploy:
+ - Click on the "Deploy" bu>on to deploy your funcFon.
+10. Monitor ExecuFon:
+ - You can monitor the execuFon of your Lambda funcFon in the Monitoring tab of the Lambda console.
+ - You can also view logs to troubleshoot any issues that may arise during execuFon.
+successfully set up a Lambda funcFon to trigger whenever an object is uploaded to an S3 bucket and
+update a DynamoDB table ajccordingly.
