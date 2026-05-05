@@ -1,0 +1,50 @@
+WEEK-12 –Crea-ng IAM USER with permission Access it with GUI and CLI
+Part A: GUI Access (Management Console)
+Objec:ve: Create an IAM user with restricted permissions and verify access via the AWS web
+portal.
+1. Administra:ve Setup (Root User)
+• Step 1: Log in to the AWS Management Console as the Root User.
+• Step 2: Search for IAM under the "Security, IdenAty, & Compliance" category.
+• Step 3: Navigate to Users and click Create user.
+• Step 4: User Details: Enter a name (e.g., S3_Specialist). Check the box for "Provide user
+access to the AWS Management Console." – custom password.
+• Step 5: Set Permissions: Select "APach policies directly." Search for and select
+AmazonS3FullAccess.
+• Step 6: Review & Create: Complete the wizard. On the final page, click Download .csv file.
+Note: This file contains your Console Password and the unique Sign-in URL.
+• Step 7: Copy your 12-digit Account ID (found in the top-right dropdown or the .csv) and
+Sign Out.
+2. Verifica:on (IAM User Login)
+• Step 8: Use the Sign-in URL from the .csv (or go to the AWS sign-in page and select IAM
+User).
+• Step 9: Enter the Account ID, then the IAM Username and Password from the .csv.
+• Step 10: The Logic Test:
+o Test 1 (Failure): Navigate to EC2. Try to view instances. You will see "API Error" or
+"Access Denied." This proves the user is restricted.
+o Test 2 (Success): Navigate to S3. Create a new bucket. It will work perfectly
+because of the aPached policy.
+Part B: CLI Access (Programma:c Access)
+Objec:ve: Access AWS resources from a standalone system (CMD/Terminal) using security
+keys.
+1. Creden:al Genera:on
+• Step 1: While logged in as an Admin/Root, go to IAM > Users and click on your user.
+• Step 2: Go to the Security creden:als tab. Scroll to Access keys and click Create access
+key.
+• Step 3: Select Command Line Interface (CLI). Acknowledge the warning and click Next.
+• Step 4: Download the .csv file. > Cri:cal: This contains the Access Key ID and Secret
+Access Key. If lost, you must delete and recreate them.
+2. Standalone System Configura:on
+• Step 5: Install the AWS CLI Tool from google on your computer.
+• Step 6: Open your Command Prompt (CMD) or Terminal.
+• Step 7: Type aws configure and press Enter.
+• Step 8: Provide the following from your .csv:
+o Access Key ID
+o Secret Access Key
+o Default region: (e.g., ap-south-1)
+o Default output: json
+3. Verifica:on via Commands
+• Step 9: Run aws s3 ls. This should list your buckets.
+• Step 10: Run aws s3 mb s3://your-unique-bucket-name. (Success)
+• Step 11: Run aws iam list-users.
+o Result: You will get an (AccessDenied) error.
+This confirms that the CLI is respecAng the same IAM policy as the GUI.
