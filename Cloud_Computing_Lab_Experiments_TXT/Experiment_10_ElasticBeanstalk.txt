@@ -1,0 +1,1 @@
+Detailed Elastic Beanstalk deployment procedure for web applications.

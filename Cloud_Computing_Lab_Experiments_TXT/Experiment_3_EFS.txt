@@ -1,0 +1,38 @@
+EXPERIMENT 3: Elastic File System (EFS)
+
+Step 1: Launch EC2 Instances
+1. Launch two Linux EC2 instances.
+2. Names:
+   - EFS-1
+   - EFS-2
+3. Allow NFS port 2049.
+
+Step 2: Create EFS
+1. Open EFS service.
+2. Click Create File System.
+3. Select VPC.
+4. Attach security group.
+5. Create file system.
+
+Step 3: Connect to Instances
+1. Open PowerShell.
+2. SSH into both EC2 instances.
+
+Step 4: Install EFS Utilities
+1. Run:
+   sudo yum install -y amazon-efs-utils
+
+Step 5: Create Mount Directory
+1. Run:
+   sudo mkdir /efs
+
+Step 6: Mount EFS
+1. Copy mount command from EFS console.
+2. Execute command on both instances.
+
+Step 7: Verify
+1. Create file in instance 1:
+   touch /efs/test.txt
+2. Check in instance 2:
+   ls /efs
+3. File visible in both systems.

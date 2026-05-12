@@ -1,0 +1,57 @@
+EXPERIMENT 4: Amazon S3 Bucket Creation
+
+========================================
+PART 1: Bucket Creation
+========================================
+
+1. Open AWS S3 service.
+2. Click Create Bucket.
+3. Enter unique bucket name.
+4. Enable ACL.
+5. Disable Block Public Access.
+6. Enable Versioning.
+7. Click Create Bucket.
+
+========================================
+PART 2: Upload File
+========================================
+
+1. Open bucket.
+2. Click Upload.
+3. Select file.
+4. Give ACL Read permission.
+5. Upload file.
+
+========================================
+PART 3: Static Website Hosting
+========================================
+
+1. Open bucket.
+2. Upload:
+   - index.html
+   - error.html
+
+3. Open Properties.
+4. Enable Static Website Hosting.
+5. Enter:
+   - index document: index.html
+   - error document: error.html
+
+6. Save changes.
+
+========================================
+PART 4: Public Access
+========================================
+
+1. Open Permissions.
+2. Enable public read access.
+3. Edit ACL.
+4. Give Everyone Read permission.
+
+========================================
+PART 5: Access Website
+========================================
+
+1. Copy website endpoint URL.
+2. Paste in browser.
+3. Website opens successfully.

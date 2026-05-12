@@ -1,0 +1,1 @@
+Detailed AWS Lambda setup with S3 trigger and DynamoDB integration.

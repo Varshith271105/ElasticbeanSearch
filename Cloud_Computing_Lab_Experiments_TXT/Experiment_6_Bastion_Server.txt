@@ -1,0 +1,1 @@
+Detailed VPC using Bastion Server procedure including public/private subnet setup and SSH through bastion host.

@@ -1,0 +1,105 @@
+EXPERIMENT 1: Launch an EC2 Instance and Connect using Different Methods
+
+Step 1: Login to AWS
+1. Open browser.
+2. Go to AWS Management Console.
+3. Login using AWS account or AWS Academy account.
+
+Step 2: Select Region
+1. Go to top-right corner.
+2. Select region:
+   - Asia Pacific (Mumbai)
+   - Or N. Virginia
+
+Step 3: Open EC2 Service
+1. Click Services.
+2. Search EC2.
+3. Open EC2 Dashboard.
+
+Step 4: Launch EC2 Instance
+1. Click Launch Instance.
+2. Enter Name:
+   - My_VS1
+
+Step 5: Choose AMI
+1. Select Ubuntu or Amazon Linux.
+
+Step 6: Choose Architecture
+1. Keep default:
+   - 64-bit (x86)
+
+Step 7: Choose Instance Type
+1. Select:
+   - t2.micro or t3.micro
+
+Step 8: Create Key Pair
+1. Click Create Key Pair.
+2. Name the key.
+3. Type:
+   - RSA
+4. Format:
+   - .pem
+5. Download key.
+
+Step 9: Configure Security Group
+1. Allow SSH (22).
+2. Source:
+   - My IP
+
+Step 10: Launch Instance
+1. Click Launch Instance.
+
+========================================
+METHOD 1: Connect using SSH
+========================================
+
+1. Open PowerShell or Terminal.
+2. Move to key location.
+3. Run:
+   ssh -i mykey.pem ubuntu@PUBLIC-IP
+4. Connection successful.
+
+========================================
+METHOD 2: Connect using PuTTY
+========================================
+
+1. Install PuTTY and PuTTYgen.
+2. Open PuTTYgen.
+3. Load .pem file.
+4. Save as .ppk.
+5. Open PuTTY.
+6. Enter:
+   ubuntu@PUBLIC-IP
+7. Go to:
+   Connection → SSH → Auth
+8. Browse and select .ppk file.
+9. Click Open.
+10. Connected successfully.
+
+========================================
+METHOD 3: Connect using CloudShell
+========================================
+
+1. Open AWS CloudShell.
+2. Upload .pem key.
+3. Copy SSH command from EC2 Connect page.
+4. Execute SSH command.
+5. EC2 connected successfully.
+
+========================================
+METHOD 4: Windows EC2 using RDP
+========================================
+
+1. Launch Windows Server EC2.
+2. Allow RDP port 3389.
+3. Download key pair.
+4. Open EC2 → Connect → RDP Client.
+5. Click Get Password.
+6. Upload .pem file.
+7. Decrypt password.
+8. Open Remote Desktop Connection.
+9. Enter Public IP.
+10. Username:
+    Administrator
+11. Paste password.
+12. Connected successfully.

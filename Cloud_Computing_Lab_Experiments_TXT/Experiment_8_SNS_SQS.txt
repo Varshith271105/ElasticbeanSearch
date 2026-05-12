@@ -1,0 +1,1 @@
+Detailed SNS, SQS, S3-SNS-SQS-Lambda architecture setup and configuration.

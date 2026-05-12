@@ -1,0 +1,92 @@
+EXPERIMENT 2: Elastic Block Storage (EBS)
+
+========================================
+PART 1: Create and Attach EBS Volume
+========================================
+
+Step 1: Create Volume
+1. Open EC2 Dashboard.
+2. Click Volumes.
+3. Click Create Volume.
+4. Select:
+   - Volume Type: gp3
+   - Size: 20 GB
+   - Availability Zone same as EC2
+5. Click Create Volume.
+
+Step 2: Attach Volume
+1. Select created volume.
+2. Click Actions → Attach Volume.
+3. Select EC2 instance.
+4. Device name:
+   /dev/xvdf
+5. Click Attach.
+
+Step 3: Verify Volume
+1. Connect to EC2 using SSH.
+2. Run:
+   lsblk
+3. Verify new disk.
+
+========================================
+PART 2: Permanently Mount EBS
+========================================
+
+Step 1: Create File System
+1. Run:
+   sudo mkfs -t ext4 /dev/xvdf
+
+Step 2: Create Mount Directory
+1. Run:
+   sudo mkdir /mnt/data
+
+Step 3: Mount Volume
+1. Run:
+   sudo mount /dev/xvdf /mnt/data
+
+Step 4: Verify Mount
+1. Run:
+   df -h
+
+Step 5: Permanent Mount
+1. Open:
+   sudo nano /etc/fstab
+2. Add:
+   /dev/xvdf /mnt/data ext4 defaults,nofail 0 2
+3. Save file.
+
+Step 6: Reboot
+1. Run:
+   reboot
+2. Verify using:
+   df -h
+
+========================================
+PART 3: Snapshot and Cross Region Copy
+========================================
+
+Step 1: Create Snapshot
+1. Open EC2 → Volumes.
+2. Select volume.
+3. Actions → Create Snapshot.
+4. Give name.
+5. Create snapshot.
+
+Step 2: Copy Snapshot
+1. Open Snapshots.
+2. Select snapshot.
+3. Actions → Copy Snapshot.
+4. Select destination region.
+5. Start copy.
+
+Step 3: Create Volume from Snapshot
+1. Switch region.
+2. Open Snapshots.
+3. Select copied snapshot.
+4. Click Create Volume.
+
+Step 4: Attach to New Instance
+1. Open Volumes.
+2. Select new volume.
+3. Attach to EC2.
+4. Verify data.

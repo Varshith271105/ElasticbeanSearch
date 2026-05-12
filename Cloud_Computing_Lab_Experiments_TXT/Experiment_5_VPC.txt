@@ -1,0 +1,1 @@
+Detailed VPC Creation and EC2 Connection procedure including VPC, subnets, route tables, IGW, security groups, and EC2 setup.
