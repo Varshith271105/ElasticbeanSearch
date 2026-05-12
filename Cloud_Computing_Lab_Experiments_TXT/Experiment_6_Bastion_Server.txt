@@ -1,1 +1,84 @@
-Detailed VPC using Bastion Server procedure including public/private subnet setup and SSH through bastion host.
+VPC USING BASTION SERVER
+1. VPC with Bastion Server
+VPC & Subnet Design
+VPC CIDR: 10.0.0.0/16
+Public Subnet (Bastion Server): 10.0.1.0/24
+Private Subnet (Database Server): 10.0.2.0/24
+2. Security Group Configuration (VERY IMPORTANT)
+Bastion Server Security Group (Public Subnet)
+Allows SSH (22) from: My IP (Database Administrator)
+ Database Server Security Group (Private Subnet)
+Allows MySQL / Aurora (3306) from: custom 10.0.1.0/24 (Public subnet / Bastion subnet)
+Allows SSH (22) from: custom Private IP of Bastion Server
+Does NOT allow public access
+3. Security Outcome
+Database server is NOT publicly accessible
+Only Bastion server can connect to DB server using SSH
+External users cannot access DB directly
+4. EC2 Instance Creation
+Bastion Server
+Subnet: Public Subnet (10.0.1.0/24)
+Key pair: bastion.pem
+Operating System: Ubuntu
+Database Server
+Subnet: Private Subnet (10.0.2.0/24)
+Key pair: dbserver.pem
+Operating System: Ubuntu
+5. Copy DB Server Key to Bastion Server
+Database server is in private subnet
+Direct SSH from local system is NOT possible
+DB server key must be copied to Bastion server
+Command (PowerShell):
+scp -i bastion.pem dbserver.pem ubuntu@<BASTION_PUBLIC_IP>:/home/ubuntu/
+File is copied securely using SCP
+dbserver.pem will now be available inside Bastion server
+6. Connect to Bastion Server
+SSH Command:
+ssh -i bastion.pem ubuntu@<BASTION_PUBLIC_IP>
+Verify key files:
+ls
+Output:
+bastion.pem
+dbserver.pem
+7. Connect from Bastion to Database Server
+SSH from Bastion:
+ssh -i dbserver.pem ubuntu@10.0.2.x
+Connection to DB server is successful
+Database administrator can now:
+Update database configurations
+Install required packages-------problem occurs
+Restart MySQL service
+VPC USING NAT GATEWAY
+8. In the above steps it clear there is no internet access, if we want to install or update anything in the
+instances present in private subnet.
+9. Network Address Translator (NAT Gateway) will solve this problem. Goto NAT Gateway in the left
+side menu bar of VPC and click on create NAT gateway.
+10. Give the Nat gateway name, select your VPC, scroll down and click create NAT gateway.
+11. So Now create a route for accessing NATGateway. Goto Route table click on create route table and
+give the route table name as bastion route , select our customized vpc and click on create route.
+12. Select the route, click on actions, goto edit subnet associations and add private subnet to this bastion
+route.
+13. Again goto actions and click on edit routes, attach NAT Gateway with 0.0.0.0/0, select your NAT
+gateway name in the drop down menu and click on save changes.
+14. Now check in the dbsever you will internet in ec2 of private subnet.
+SCENARIO BASED QUESTIONS
+1. You have multiple private subnets in different AZs. Should you use one NAT Gateway or
+multiple NAT Gateways? Explain your design choice.
+2. Your private subnet instances can reach the internet, but the NAT Gateway shows no traffic.
+What could be the possible reasons?
+3. A NAT Gateway was accidentally created in a private subnet instead of a public subnet.
+What problem will occur, and how would you fix it?
+4. An application running in a private subnet requires outbound access only to a few trusted external
+services.
+How would you restrict traffic while still using a NAT Gateway?
+5. Multiple teams share a single VPC and NAT Gateway. One team’s traffic is affecting others.
+How would you redesign the NAT Gateway setup to isolate traffic?
+6. You can successfully SSH into a private EC2 instance using a Bastion server, but yum update /
+apt update fails inside the private instance. Why?
+7. Private EC2 instances can access the internet through a NAT Gateway, but administrators cannot
+SSH into them using the Bastion server.
+8. A Bastion server and NAT Gateway are both created in a private subnet by mistake. What impact
+does this cause?
+9. SSH access to the Bastion server works, but SSH from Bastion to the private EC2 fails. Why?
+10. A student claims that a Bastion server alone is enough to provide internet access to private
+instances. Why is Bastion not a replacement for NAT Gateway?
